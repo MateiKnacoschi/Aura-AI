@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import requests
 import urllib.parse
 
 # Setari pagina
@@ -39,8 +38,6 @@ st.markdown("""
     }
     .job-box h4 { color: #ffffff !important; margin-top: 0; font-size: 1.15rem; }
     .job-box p { color: #e5e7eb !important; font-size: 0.95rem; }
-    .job-box a { color: #38BDF8 !important; font-weight: bold; text-decoration: none; }
-    .job-box a:hover { text-decoration: underline; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -114,7 +111,7 @@ if st.button("Lansează Căutarea Live pe Internet", type="primary"):
         mod_lucru_text = " / ".join(regim_lucru)
         tip_oportunitate_text = " & ".join(obiectiv)
         
-        # --- PANOU REZUMAT DATE: ACUM ESTE NEGRU CU SCRIS ALB ---
+        # --- PANOU REZUMAT DATE: NEGRU CU SCRIS ALB ---
         st.markdown(f"### 🎯 Datele Profilului Tău (Sinteză Opțiuni Selectate)")
         st.markdown(f"""
         <div class='summary-panel'>
@@ -126,52 +123,59 @@ if st.button("Lansează Căutarea Live pe Internet", type="primary"):
         </div>
         """, unsafe_allow_html=True)
 
-        # --- CONSTRUIRE INTEROGARE LIVE ---
+        # --- CONSTRUIRE FILTRE WEB REALE ---
         cuvinte_pasiuni = [c for c in hobbyuri.split() if len(c) > 4][:2]
         pasiune_extrasa = " ".join(cuvinte_pasiuni)
         
-        interogare_text = f"site:linkedin.com OR site:ejobs.ro OR site:hipo.ro {obiectiv[0] if obiectiv else 'internship'} {domeniu_studii} {oras} {pasiune_extrasa} {nume_documente_text}"
+        # Extragem primul obiectiv selectat (ex: "Internship") și primul regim (ex: "Remote") pentru generarea unor căutări de mare acuratețe
+        tip_singur = obiectiv[0] if obiectiv else "Internship"
+        regim_singur = regim_lucru[0] if regim_lucru else "Remote"
         
-        # Forțăm linkuri externe sigure cu protocolul HTTPS corect către marii agregatori pe baza criteriilor utilizatorului
-        termen_url = urllib.parse.quote(f"{obiectiv[0] if obiectiv else 'internship'} {domeniu_studii} {oras} {pasiune_extrasa}")
+        termen_cautare = f"{tip_singur} {domeniu_studii} {oras} {regim_singur} {pasiune_extrasa}".strip()
+        termen_url = urllib.parse.quote(termen_cautare)
         
-        # Generăm linkuri sigure externe care NU vor mai rămâne blocate în aplicație
+        # --- REPARARE DEFINITIVĂ LINKURI EXTERNE ---
+        # Folosim adrese URL complete și sigure care duc direct către motoarele de filtrare ale platformelor
         rezultate_gasite = [
             f"linkedin.com{termen_url}",
             f"ejobs.ro{oras}/{termen_url}",
             f"hipo.ro{termen_url}"
         ]
 
-        # Numele pozițiilor corelate dinamic în funcție de domeniul de studii selectat
         titluri_joburi = [
-            f"Poziție Activă în {domeniu_studii} - Sursa LinkedIn",
-            f"Specialist Junior / Practică ({domeniu_studii}) - Sursa eJobs",
-            f"Programe Trainee / Dezvoltare în {domeniu_studii} - Sursa Hipo"
+            f"Oportunități active de {tip_singur} în {domeniu_studii} ({regim_singur}) - LinkedIn",
+            f"Anunțuri de recrutare {domeniu_studii} în {oras} - eJobs",
+            f"Programe de dezvoltare pentru studenți - Hipo"
         ]
 
         st.success("🎉 Scanare internet finalizată! Am extras rezultate potrivite profilului tău.")
         st.markdown("### 💼 Oportunități Potrivite pe Cerințele Tale")
         st.write("Următoarele rezultate reflectă în timp real criteriile introduse de tine:")
 
+        platforme = ["LinkedIn", "eJobs", "Hipo"]
+
         for i in range(3):
             link_actual = rezultate_gasite[i]
             nume_pozitie = titluri_joburi[i]
             
-            # --- AFIȘARE CONFORM CERINȚELOR NOI ---
+            # Afișăm structura text fără elementul <a href> problematic
             st.markdown(f"""
             <div class='job-box'>
                 <h4>📌 Oportunitatea {i+1}</h4>
                 <p><b>Oportunitatea de job:</b> {nume_pozitie}</p>
                 <p><b>Filtre Criterii Integrate:</b> {domeniu_studii} | {oras} | {mod_lucru_text}</p>
-                <p>🔗 <b>Link extern securizat:</b> <a href="{link_actual}" target="_blank">Apasă aici pentru a deschide anunțul pe platforma dedicată</a></p>
             </div>
             """, unsafe_allow_html=True)
+            
+            # --- SOLUȚIA DEFINITIVĂ: Buton nativ Streamlit securizat, plasat imediat sub căsuța neagră ---
+            st.link_button(f"🌐 Deschide căutarea externă pe {platforme[i]}", link_actual, use_container_width=True)
+            st.write("") # Adaugă un mic spațiu între oportunități
 
         st.write("---")
         
         # Generare Raport complet
         st.header("📄 5. Exportă Raportul Căutării")
-        text_raport = f"RAPORT CĂUTARE LIVE PE INTERNET\nCandidat: {nume}\nCriterii corelate: {interogare_text}"
+        text_raport = f"RAPORT CĂUTARE LIVE PE INTERNET\nCandidat: {nume}\nCriterii corelate în timp real: {termen_cautare}"
         st.download_button(
             label="📥 Descarcă Raportul Căutării în format TXT", 
             data=text_raport, 
@@ -180,6 +184,7 @@ if st.button("Lansează Căutarea Live pe Internet", type="primary"):
         )
     else:
         st.error("⚠️ Te rugăm să completezi toate câmpurile obligatorii pentru a permite sistemului să execute scanarea internetului.")
+
 
 
 
