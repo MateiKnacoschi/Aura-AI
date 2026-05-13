@@ -12,11 +12,12 @@ st.markdown("""
     p.subtitle { text-align: center; color: gray; }
     .stButton>button { background-color: #2563EB; color: white; border-radius: 8px; width: 100%; }
     .stButton>button:hover { background-color: #1D4ED8; color: white; }
+    .job-box { background-color: #ffffff; padding: 15px; border-radius: 8px; border-left: 5px solid #2563EB; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     </style>
 """, unsafe_allow_html=True)
 
 st.markdown("<h1>🎓 Platforma AI Universală de Orientare</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Prototip avansat de potrivire profesională pentru studenți și absolvenți</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Conexiune directă între studenți și angajatori prin Inteligență Artificială</p>", unsafe_allow_html=True)
 st.write("---")
 
 # Sectiunea 1: Datele Personale si de Studii
@@ -26,12 +27,17 @@ col1, col2 = st.columns(2)
 with col1:
     nume = st.text_input("Nume complet:", placeholder="Ex: Ioan Popescu")
     varsta = st.number_input("Vârsta ta:", min_value=16, max_value=100, value=20, step=1)
+    oras = st.text_input("Orașul de proveniență:", placeholder="Ex: Iași, București, Cluj...")
 with col2:
     nivel_studii = st.selectbox(
         "Nivel de studii actual:",
         ["Student - Licență (Anul 1-2)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
     )
-    oras = st.text_input("Orașul de proveniență:", placeholder="Ex: Iași, București, Cluj...")
+    # --- FUNCȚIONALITATE NOUĂ: Domeniul de studii ---
+    domeniu_studii = st.selectbox(
+        "Domeniul de studii / Licență:",
+        ["Informatică / IT / Inginerie", "Economie / Business / Marketing", "Litere / Limbi Străine / Comunicare", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Alt domeniu"]
+    )
 
 st.write("---")
 
@@ -43,7 +49,7 @@ with col3:
     obiectiv = st.multiselect(
         "Ce tip de oportunitate cauți? (Poți alege ambele):",
         ["Loc de muncă (Job)", "Internship / Stagiu de practică"],
-        default=["Loc de muncă (Job)"]
+        default=["Internship / Stagiu de practică"]
     )
 with col4:
     regim_lucru = st.multiselect(
@@ -70,29 +76,25 @@ hobbyuri = st.text_area("Exprimă-te liber! Scrie hobby-urile tale, interesele, 
                         placeholder="Ex: Îmi place să scriu cod în Python, să editez fotografii, sunt voluntar în asociații studențești...")
 
 st.write("---")
-st.header("🤖 4. Analiză AI și Rezultate")
+st.header("🤖 4. Analiză AI și Conexiune Angajatori")
 
-if st.button("Generează Analiza Profilului Complet", type="primary"):
+if st.button("Generează Analiza și Deschide Joburile Active", type="primary"):
     if nume and hobbyuri and oras and obiectiv and regim_lucru:
         st.info("🧠 Inteligența Artificială corelează studiile, locația, documentele și pasiunile tale...")
-        st.success("🎉 Analiză structurală finalizată!")
+        st.success("🎉 Analiză structurală finalizată! Am găsit poziții compatibile.")
         
-        # Algoritm dinamic curat pentru extragerea cuvintelor cheie
+        # Algoritm dinamic pentru extragerea cuvintelor cheie
         cuvinte = [c for c in hobbyuri.split() if len(c) > 4]
+        cuvant_cheie = cuvinte[0].capitalize() if cuvinte else "Specialist"
         
-        if cuvinte:
-            cuvant_cheie = cuvinte[0].capitalize()
-        else:
-            cuvant_cheie = "Specialist"
-        
-        # Generam date adaptate dinamic bazate pe input-ul utilizatorului
+        # Generam date adaptate dinamic bazate pe input
         date_ai = {
             "domeniu_principal": f"Expert / Junior în {cuvant_cheie}",
-            "descriere_job": f"Având în vedere nivelul tău de studii ({nivel_studii}) și locația din {oras}, profilul tău bazat pe pasiunea '{hobbyuri}' indică un potențial ridicat.",
+            "descriere_job": f"Având în vedere specializarea ta în '{domeniu_studii}' la nivelul '{nivel_studii}' și locația din {oras}, profilul tău bazat pe pasiunea '{hobbyuri}' are o deschidere excelentă pe piață.",
             "locatie_recomandata": " / ".join(regim_lucru),
             "tip_oportunitate": " și ".join(obiectiv),
             "scor_domeniu_1": 95, "scor_domeniu_2": 68, "scor_domeniu_3": 45,
-            "nume_domeniu_1": f"Direcția {cuvant_cheie}", "nume_domeniu_2": "Management & Coordonare", "nume_domeniu_3": "Consultant Tehnic"
+            "nume_domeniu_1": f"Direcția {cuvant_cheie}", "nume_domeniu_2": "Management & Strategie", "nume_domeniu_3": "Consultant Operațiuni"
         }
 
         # Graficul vizual
@@ -105,23 +107,41 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
         st.bar_chart(date_grafic)
         st.write("---")
 
-        # Afisarea rezultatelor corelate
-        col_st, col_dr = st.columns(2)
-        with col_st:
-            st.markdown("#### 💼 Poziția Potrivită Identificată")
-            st.warning(f"**{date_ai['domeniu_principal']}**")
-            st.write(date_ai['descriere_job'])
-            st.write(f"📍 **Mod de lucru recomandat:** {date_ai['locatie_recomandata']}")
-        with col_dr:
-            st.markdown("#### 🎓 Oportunitatea de Pregătire Sugerată")
-            st.info(f"**{date_ai['tip_oportunitate']} adaptat profilului**")
-            st.write(f"Se recomandă aplicarea la un program accelerat în regim {date_ai['locatie_recomandata']} special conceput pentru nivelul: {nivel_studii}.")
+        # --- NOUĂ FUNCȚIONALITATE: Generare MINIM 3 JOBURI + LINKURI + CONEXIUNE ---
+        st.markdown("### 💼 3 Oportunități Active pentru Tine (Aplicați Instant)")
+        st.write("Pe baza profilului tău, sistemul a trimis automat fișierele și datele tale către partenerii noștri:")
+
+        # Generăm listele de joburi simulate inteligent pe baza cuvântului cheie
+        joburi_fictive = [
+            {"titlu": f"Junior {cuvant_cheie} Specialist", "companie": "TechSolutions România", "platforma": "eJobs", "url": "ejobs.ro"},
+            {"titlu": f"Internship în {cuvant_cheie} & Business", "companie": "Global Startups Hub", "platforma": "Hipo", "url": "hipo.ro"},
+            {"titlu": f"Trainee - {cuvant_cheie} Operations", "companie": "Enterprise Corp", "platforma": "LinkedIn", "url": "linkedin.com"}
+        ]
+
+        for i, job in enumerate(joburi_fictive):
+            st.markdown(f"""
+            <div class='job-box'>
+                <h4>📍 {job['titlu']}</h4>
+                <p><b>Companie:</b> {job['companie']} | <b>Regim:</b> {date_ai['locatie_recomandata']}</p>
+                <p><i>Sincronizat prin platforma externă: {job['platforma']}</i></p>
+            </div>
+            """, unsafe_allow_html=True)
             
+            # Coloane interactive pentru fiecare job în parte
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                # Link real către agregatorul de joburi
+                st.link_button(f"🔗 Vezi Jobul pe {job['platforma']}", job['url'], use_container_width=True)
+            with col_b2:
+                # Conexiunea directă: Simulare de trimitere instantă din aplicație
+                if st.button(f"🚀 Aplică Instant (Trimite CV-ul tău către {job['companie']})", key=f"btn_{i}"):
+                    st.toast(f"📬 Succes! Profilul lui {nume} și cele {len(incarcare_documente) if incarcare_documente else 0} documente au fost transmise la departamentul HR al {job['companie']}!")
+
         st.write("---")
         
         # Generare Raport complex
         st.header("📄 5. Exportă Datele Proiectului")
-        text_raport = f"RAPORT AI EVALUARE CARIERĂ STUDENT\n----------------------------------------\nCandidat: {nume}\nOrigine: {oras}\nNivel Studii: {nivel_studii}\nTip Oportunitate: {date_ai['tip_oportunitate']}\nRegim Lucru: {date_ai['locatie_recomandata']}\n----------------------------------------\nProfil AI Recomandat: {date_ai['domeniu_principal']}\nEvaluare Context: {date_ai['descriere_job']}\n"
+        text_raport = f"RAPORT AI EVALUARE CARIERĂ STUDENT\n----------------------------------------\nCandidat: {nume}\nSpecializare: {domeniu_studii}\nNivel Studii: {nivel_studii}\nTip Oportunitate: {date_ai['tip_oportunitate']}\nRegim Lucru: {date_ai['locatie_recomandata']}\n----------------------------------------\nProfil AI Recomandat: {date_ai['domeniu_principal']}\n"
         
         st.download_button(
             label="📥 Descarcă Raportul Complet în format TXT", 
@@ -131,4 +151,5 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
         )
     else:
         st.error("⚠️ Te rugăm să completezi câmpurile obligatorii (Nume, Oraș, Hobby-uri) și să selectezi preferințele de muncă pentru analiză.")
+
 
