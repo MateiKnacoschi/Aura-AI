@@ -4,7 +4,7 @@ import requests
 import json
 
 # Setari pagina
-st.set_page_config(page_title="Asistent AI Profil de Cariera", page_icon="🚀", layout="centered")
+st.set_page_config(page_title="Aura AI- De aici începe noua ta carieră", page_icon="🚀", layout="centered")
 
 # Design vizual modern - Casete negre cu text alb
 st.markdown("""
@@ -43,25 +43,25 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>🎓 Platforma AI Universală de Orientare</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Generare Profil de Candidat și Recomandări de Joburi Reale prin GPT-4o</p>", unsafe_allow_html=True)
+st.markdown("<h1>🎓Aura AI- Află ce și cum ți se potrivește</h1>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Aici te descoperi. De aici începe startul căutării! Cu modelul Aura AI îți poți introduce rapid domeniul de specializare, pasiunile și hobby-urile tale, iar modelul nostru îți va prezenta, în timp real, opțiunile cele mai potrivite pentru tine!/p>", unsafe_allow_html=True)
 st.write("---")
 
 # Sectiunea 1: Datele Personale si de Studii
-st.header("📋 1. Date Personale și Educație")
+st.header("📋 1. Spune-ne despre tine!")
 
 col1, col2 = st.columns(2)
 with col1:
-    nume = st.text_input("Nume complet CANDIDAT:", placeholder="Ex: Ioan Popescu")
+    nume = st.text_input("Nume complet:", placeholder="Ex: Ioan Popescu")
     varsta = st.number_input("Vârsta ta (ani):", min_value=16, max_value=100, value=21, step=1)
-    oras = st.text_input("Orașul de proveniență:", placeholder="Ex: Iași, București, Cluj...")
+    oras = st.text_input("Orașul tău:", placeholder="Ex: Iași, București, Cluj...")
 with col2:
     nivel_studii = st.selectbox(
-        "Nivel de studii actual:",
-        ["Student - Licență (Anul 1-2)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
+        "Nivelul de studii:",
+        ["Student - Licență (În desfășurare)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev”, ”Absolvent Liceu"]
     )
     domeniu_studii = st.selectbox(
-        "Domeniul de studii / Licență:",
+        "Domeniul de studii",
         ["Informatică / IT", "Economie / Business / Marketing", "Litere / Limbi Străine", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Management"]
     )
 
@@ -87,7 +87,7 @@ with col4:
 st.write("---")
 
 # Sectiunea 3: Documente si Experienta Open text
-st.header("📂 3. Documente și Pasiuni")
+st.header("📂 3. CV-ul tău")
 
 incarcare_documente = st.file_uploader(
     "Încarcă documentele tale (CV, Atestat studii, Diplome, Certificate):", 
@@ -106,15 +106,15 @@ hobbyuri = st.text_area("Exprimă-te liber! Scrie hobby-urile tale, interesele, 
 st.write("---")
 st.header("🤖 4. Analiză AI - Generare Profil și Joburi Reale")
 
-if st.button("Generează Profilul de Candidat și Recomandările", type="primary"):
+if st.button("Afișează-mi rezultatele", type="primary"):
     if nume and hobbyuri and oras and obiectiv and regim_lucru and domeniu_studii:
-        st.info("🧠 Modelul OpenAI GPT-4o analizează datele pentru a construi profilul profesional ideal...")
+        st.info("🧠 Se încarcă cele mai bune opțiuni pentru tine!")
         
         mod_lucru_text = " / ".join(regim_lucru)
         tip_oportunitate_text = " & ".join(obiectiv)
         
         # --- PANOU REZUMAT DATE INTRODUSE ---
-        st.markdown(f"### 🎯 Datele Profilului Tău (Sinteză Opțiuni Selectate)")
+        st.markdown(f"### 🎯 Datele Profilului Tău")
         st.markdown(f"""
         <div class='summary-panel'>
             <p>👤 <b>Candidat:</b> {nume} ({varsta} ani)</p>
@@ -180,16 +180,16 @@ if st.button("Generează Profilul de Candidat și Recomandările", type="primary
                 "job3_descriere": f"Poziție deschisă la nivel regional în {oras} adaptată cerințelor de regim selectate."
             }
 
-        st.success("🎉 Profilul profesional și analiza de carieră au fost generate cu succes de către AI!")
+        st.success("🎉 Iată profilul tău de candidat!")
         
-        # --- AFIȘARE PROFIL DE CANDIDAT REAL ---
-        st.markdown("### 📝 Profil Profesional de Candidat (Creat de AI)")
+        # --- AFIȘARE PROFIL DE CANDIDAT ---
+        st.markdown("### 📝 Tu în cîteva cuvinte...")
         st.write(date_ai["profil_profesional"])
         st.write("---")
 
-        # --- AFIȘARE RECOMANDĂRI JOBURI REALE (CASUȚE NEGRE) ---
-        st.markdown("### 💼 Joburi Reale Recomandate pentru Orientare")
-        st.write("Pe baza analizei de profil, iată 3 direcții de joburi reale spre care te poți orienta pe piața muncii:")
+        # --- AFIȘARE RECOMANDĂRI JOBURI (CASUȚE NEGRE) ---
+        st.markdown("### 💼 Joburile recomandate pentru tine!")
+        st.write("Pe baza analizei de profil, iată 3 direcții de joburi spre care te poți orienta pe piața muncii:")
 
         joburi_config = [
             {"titlu": date_ai["job1_titlu"], "desc": date_ai["job1_descriere"]},
