@@ -81,7 +81,7 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
         # Algoritm dinamic simplu pentru mockup pe baza textului introdus
         text_analizat = hobbyuri.lower()
         cuvinte = [c for c in hobbyuri.split() if len(c) > 4]
-        cuvant_cheie = cuvinte.capitalize() if cuvinte else "Specialist"
+       cuvant_cheie = cuvinte[0].capitalize() if cuvinte else "Specialist"
         
         # Generăm date adaptate dinamic bazate pe input-ul utilizatorului
         date_ai = {
