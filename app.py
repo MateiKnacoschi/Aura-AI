@@ -18,31 +18,31 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<h1>Aura AI- Primul pas spre noul tău job</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Sistem avansat de analiză multi-criteriu și conectare cu angajatorii</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Aici aflii ce ți se potrivește, și de unde să începi</p>", unsafe_allow_html=True)
 st.write("---")
 
 # Sectiunea 1: Datele Personale si de Studii
-st.header("📋 1. Date Personale și Educație")
+st.header("📋 1. Spune-ne despre tine!")
 
 col1, col2 = st.columns(2)
 with col1:
     nume = st.text_input("Nume complet:", placeholder="Ex: Ioan Popescu")
     varsta = st.number_input("Vârsta ta:", min_value=16, max_value=100, value=20, step=1)
-    oras = st.text_input("Orașul de proveniență:", placeholder="Ex: Iași, București, Cluj...")
+    oras = st.text_input("Unde dorești să profesezi?", placeholder="Ex: Iași, București, Cluj...")
 with col2:
     nivel_studii = st.selectbox(
-        "Nivel de studii actual:",
-        ["Student - Licență (Anul 1-2)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
+        "Nivelul tău de studii",
+        ["Student - Licență (În curs)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
     )
     domeniu_studii = st.selectbox(
         "Domeniul de studii / Licență:",
-        ["Informatică / IT / Inginerie", "Economie / Business / Marketing", "Litere / Limbi Străine / Comunicare", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Alt domeniu"]
+        ["Informatică / IT /", "Inginerie", "Economie / Business / Marketing", "Litere / Limbi Străine / Comunicare", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Alt domeniu"]
     )
 
 st.write("---")
 
 # Sectiunea 2: Preferinte de Munca
-st.header("⚙️ 2. Preferințe și Obiective Profesionale")
+st.header("⚙️ 2. Unde și cum ți-ai dori să lucrezi?")
 
 col3, col4 = st.columns(2)
 with col3:
@@ -61,7 +61,7 @@ with col4:
 st.write("---")
 
 # Sectiunea 3: Documente si Experienta Open text
-st.header("📂 3. Documente și Pasiuni")
+st.header("📂 3. Documente utile (CV, atestate, diplome, etc.)")
 
 incarcare_documente = st.file_uploader(
     "Încarcă documentele tale (CV, Atestat studii, Diplome, Certificate):", 
@@ -79,9 +79,9 @@ hobbyuri = st.text_area("Exprimă-te liber! Scrie hobby-urile tale, interesele, 
                         placeholder="Ex: Îmi place să scriu cod în Python, să editez fotografii, sunt voluntar în asociații studențești...")
 
 st.write("---")
-st.header("🤖 4. Analiză Multi-Criteriu și Profile Angajatori")
+st.header("🤖 4. Află ce ți se potrivește acum!")
 
-if st.button("Lansează Analiza Integrată", type="primary"):
+if st.button("Să începem!", type="primary"):
     if nume and hobbyuri and oras and obiectiv and regim_lucru and domeniu_studii:
         st.info("🧠 Corelăm profilul global: Vârstă + Studii + Specializare + Oraș + Preferințe + Documente + Pasiuni...")
         st.success("🎉 Corelare de peste 90% realizată cu succes!")
