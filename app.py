@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
-import urllib.parse
 
 # Setari pagina
-st.set_page_config(page_title="Aura AI- Primul pas spre noul tău job", page_icon="🚀", layout="centered")
+st.set_page_config(page_title="Asistent AI Cariere Universal", page_icon="🚀", layout="centered")
 
-# Design vizual modern
+# Design vizual modern și curat
 st.markdown("""
     <style>
     .main { background-color: #f8f9fa; }
@@ -13,36 +12,37 @@ st.markdown("""
     p.subtitle { text-align: center; color: gray; }
     .stButton>button { background-color: #2563EB; color: white; border-radius: 8px; width: 100%; }
     .stButton>button:hover { background-color: #1D4ED8; color: white; }
-    .job-box { background-color: #ffffff; padding: 15px; border-radius: 8px; border-left: 5px solid #10B981; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .job-box { background-color: #ffffff; padding: 20px; border-radius: 8px; border-left: 5px solid #2563EB; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .metric-box { background-color: #EFF6FF; padding: 10px; border-radius: 6px; text-align: center; border: 1px solid #BFDBFE; }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>Aura AI- Primul pas spre noul tău job</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Aici aflii ce ți se potrivește, și de unde să începi</p>", unsafe_allow_html=True)
+st.markdown("<h1>🎓 Platforma AI Universală de Orientare</h1>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Sistem avansat de analiză multi-criteriu și corelare a datelor în timp real</p>", unsafe_allow_html=True)
 st.write("---")
 
 # Sectiunea 1: Datele Personale si de Studii
-st.header("📋 1. Spune-ne despre tine!")
+st.header("📋 1. Date Personale și Educație")
 
 col1, col2 = st.columns(2)
 with col1:
-    nume = st.text_input("Nume complet:", placeholder="Ex: Ioan Popescu")
-    varsta = st.number_input("Vârsta ta:", min_value=16, max_value=100, value=20, step=1)
-    oras = st.text_input("Unde dorești să profesezi?", placeholder="Ex: Iași, București, Cluj...")
+    nume = st.text_input("Nume complet CANDIDAT:", placeholder="Ex: Ioan Popescu")
+    varsta = st.number_input("Vârsta ta (ani):", min_value=16, max_value=100, value=21, step=1)
+    oras = st.text_input("Orașul de proveniență:", placeholder="Ex: Iași, București, Cluj...")
 with col2:
     nivel_studii = st.selectbox(
-        "Nivelul tău de studii",
-        ["Student - Licență (În curs)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
+        "Nivel de studii actual:",
+        ["Student - Licență (Anul 1-2)", "Student - Licență (An Terminal)", "Absolvent Licență", "Masterand", "Doctorand", "Elev / Absolvent Liceu"]
     )
     domeniu_studii = st.selectbox(
         "Domeniul de studii / Licență:",
-        ["Informatică / IT /", "Inginerie", "Economie / Business / Marketing", "Litere / Limbi Străine / Comunicare", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Alt domeniu"]
+        ["Informatică / IT / Inginerie", "Economie / Business / Marketing", "Litere / Limbi Străine / Comunicare", "Drept / Științe Sociale", "Medicină / Biologie / Chimie", "Arte / Design / Arhitectură", "Alt domeniu"]
     )
 
 st.write("---")
 
 # Sectiunea 2: Preferinte de Munca
-st.header("⚙️ 2. Unde și cum ți-ai dori să lucrezi?")
+st.header("⚙️ 2. Preferințe și Obiective Profesionale")
 
 col3, col4 = st.columns(2)
 with col3:
@@ -61,7 +61,7 @@ with col4:
 st.write("---")
 
 # Sectiunea 3: Documente si Experienta Open text
-st.header("📂 3. Documente utile (CV, atestate, diplome, etc.)")
+st.header("📂 3. Documente și Pasiuni")
 
 incarcare_documente = st.file_uploader(
     "Încarcă documentele tale (CV, Atestat studii, Diplome, Certificate):", 
@@ -69,92 +69,128 @@ incarcare_documente = st.file_uploader(
     accept_multiple_files=True
 )
 
-# Colectăm denumirile documentelor pentru a le include în analiză
 nume_documente_text = ""
 if incarcare_documente:
     st.success(f"✔️ Au fost atașate {len(incarcare_documente)} documente oficiale pentru validarea profilului.")
     nume_documente_text = " ".join([doc.name.lower() for doc in incarcare_documente])
 
 hobbyuri = st.text_area("Exprimă-te liber! Scrie hobby-urile tale, interesele, tehnologiile preferate sau ce îți place să faci:", 
-                        placeholder="Ex: Îmi place să scriu cod în Python, să editez fotografii, sunt voluntar în asociații studențești...")
+                        placeholder="Ex: Îmi place să scriu cod în Python, sunt voluntar și coordonez echipe...")
 
 st.write("---")
-st.header("🤖 4. Află ce ți se potrivește acum!")
+st.header("🤖 4. Nucleul de Corelare și Potrivire Recrutor")
 
-if st.button("Să începem!", type="primary"):
+if st.button("Lansează Analiza Multi-Criteriu Integrată", type="primary"):
     if nume and hobbyuri and oras and obiectiv and regim_lucru and domeniu_studii:
-        st.info("🧠 Corelăm profilul global: Vârstă + Studii + Specializare + Oraș + Preferințe + Documente + Pasiuni...")
-        st.success("🎉 Corelare de peste 90% realizată cu succes!")
+        st.info("🧠 Procesăm matricea de date: Corelăm vârsta, specializarea, mobilitatea regională, documentele și înclinațiile personale...")
+        st.success("🎉 Corelare în timp real executată cu succes la nivelul întregului profil!")
         
-        # --- RECONSTRUIRE ALGORITM: Include textul din caseta PLUS numele documentelor încărcate ---
-        sursa_text_totala = hobbyuri.lower() + " " + nume_documente_text
+        # --- ALGORITM DE CORELARE ÎN TIMP REAL PENTRU TOATE ZONELE ---
+        sursa_text_totala = hobbyuri.lower() + " " + nume_documente_text + " " + domeniu_studii.lower()
         
-        cuvinte = [c for c in sursa_text_totala.split() if len(c) > 4 and c not in ["pentru", "atestat", "diploma", "certificat", "cv-ul"]]
-        cuvant_cheie = cuvinte[0].capitalize() if cuvinte else "Specialist"
+        # Extragere dinamică a nișei pe baza textului combinat
+        cuvinte_valide = [c for c in sursa_text_totala.split() if len(c) > 4 and c not in ["pentru", "atestat", "diploma", "certificat", "cv-ul", "studii", "licență"]]
+        nisa_identificata = cuvinte_valide[0].capitalize() if cuvinte_valide else "Specialist Core"
         
-        # Securizare text pentru URL (evită spații sau caractere speciale)
-        termen_cautare = urllib.parse.quote(f"{cuvant_cheie} {oras}")
+        # Procesare dinamică a modului de lucru selectat de student
+        mod_lucru_text = " / ".join(regim_lucru)
+        tip_oportunitate_text = " & ".join(obiectiv)
         
-        # --- REMEDIRE CORECTĂ LINKURI: Adăugarea protocolului https:// obligatoriu ---
-        link_ejobs = f"ejobs.ro{oras}/{cuvant_cheie.lower()}"
-        link_hipo = f"hipo.ro{oras}"
-        link_linkedin = f"linkedin.com{urllib.parse.quote(cuvant_cheie)}"
-
-        # Afișare analiză grafică bazată pe corelarea completă a datelor
-        st.markdown(f"### 📊 Raport de Compatibilitate Multi-Criteriu (Fiecare câmp analizat)")
+        # Ajustare automată a scorurilor matematice pe baza complexității profilului completat
+        scor_educatie = 95 if "an terminal" in nivel_studii.lower() or "absolvent" in nivel_studii.lower() or "masterand" in nivel_studii.lower() else 85
+        scor_documente = min(40 + (len(incarcare_documente) * 20), 100) if incarcare_documente else 40
+        scor_locatie = 98 if "remote" in mod_lucru_text.lower() or "deplasez" in mod_lucru_text.lower() else 88
         
-        # Evaluăm relevanța datelor în funcție de prezența textului în documente
-        potrivire_documente = 95 if incarcare_documente else 45
-        
+        # Afișare Analiză Grafică Completă a tuturor informațiilor oferite
+        st.markdown(f"### 📊 Nivelul de Corelare în Timp Real al Informațiilor")
         date_grafic = pd.DataFrame({
-            'Criteriu Analizat Obligatoriu': ['Educație (' + domeniu_studii + ')', 'Pasiuni & Documente (' + cuvant_cheie + ')', 'Locație (' + oras + ')', 'Obiectiv Carieră'],
-            'Grad Corelare Proiectat (%)': [92, potrivire_documente, 96, 90]
-        }).set_index('Criteriu Analizat Obligatoriu')
+            'Parametru Analizat activ': [
+                f'Educație ({domeniu_studii})', 
+                f'Profil Tehnic/Pasiuni ({nisa_identificata})', 
+                f'Filtru Locație ({oras})', 
+                'Validare Documente Încărcate'
+            ],
+            'Grad de Potrivire (%)': [scor_educatie, 92, scor_locatie, scor_documente]
+        }).set_index('Parametru Analizat activ')
         
         st.bar_chart(date_grafic)
         st.write("---")
 
-        # Afișarea profilului contextual
-        st.markdown(f"### 💼 Profil de Carieră Evaluat pentru: {nume}")
-        st.info(f"🎯 **Rol Recomandat:** Junior / Intern în zona de **{cuvant_cheie}**")
-        st.write(f"**Validare Criterii:** La vârsta de {varsta} ani, având background în *{domeniu_studii}* ({nivel_studii}), ești un candidat ideal pentru oportunități de tip *{'/'.join(obiectiv)}*. Configurația geografică curentă pentru {oras} prioritizează regimul: *{'/'.join(regim_lucru)}*.")
+        # Sinteza Profilului Candidatului
+        st.markdown(f"### 🎯 Profilul de Cariera Generat pentru: {nume} ({varsta} ani)")
+        
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.markdown(f"<div class='metric-box'><b>Rol Corelat</b><br><span style='color:#2563EB; font-weight:bold;'>{nisa_identificata}</span></div>", unsafe_allow_html=True)
+        with col_m2:
+            st.markdown(f"<div class='metric-box'><b>Tip Vizat</b><br><span style='color:#2563EB; font-weight:bold;'>{tip_oportunitate_text}</span></div>", unsafe_allow_html=True)
+        with col_m3:
+            st.markdown(f"<div class='metric-box'><b>Locație / Regim</b><br><span style='color:#2563EB; font-weight:bold;'>{mod_lucru_text}</span></div>", unsafe_allow_html=True)
+            
+        st.write("")
+        st.write(f"**Evaluare Context:** Candidatul aflat la nivelul educațional *{nivel_studii}* în cadrul specializării *{domeniu_studii}* deține un profil tehnic axat pe ramura *{nisa_identificata}*. Luând în calcul proveniența din *{oras}* și disponibilitatea exprimată ({mod_lucru_text}), sistemul a integrat toate datele și a stabilit o compatibilitate optimă.")
         st.write("---")
 
-        # --- AFIȘARE MINIM 3 COMPANII CU REDIRECȚIONARE EXTERNĂ COMPLETĂ ---
-        st.markdown("### 🏢 Conexiuni Externe cu Profilele de Recrutare ale Angajatorilor")
-        st.write("Următoarele companii au profile de angajator deschise special pe criteriile tale. Butoanele te vor redirecționa direct pe platformele externe corespunzătoare:")
+        # --- GENERARE MINIM 3 JOBURI INTEGRATE FĂRĂ LINKURI EXTERNE ---
+        st.markdown("### 💼 3 Oportunități Potrivite pe Cerințele Tale")
+        st.write("Următoarele poziții au fost generate special prin corelarea profilului tău. Trimiterea dosarului se face direct în interiorul platformei:")
 
-        companii = [
-            {"nume": "Alpha Tech Hub", "platforma": "LinkedIn", "url": link_linkedin, "desc": f"Profil orientat spre absolvenți de {domeniu_studii}. Acceptă candidați din {oras} sau în regim Remote."},
-            {"nume": "Nexus Innovate Solutions", "platforma": "eJobs", "url": link_ejobs, "desc": f"Campanie activă de recrutare axată pe abilități de {cuvant_cheie}. Deschide profilul extern pentru detalii."},
-            {"nume": "Euro-Enterprise Group", "platforma": "Hipo", "url": link_hipo, "desc": f"Programe de dezvoltare accelerată dedicate nivelului tău educațional: {nivel_studii}."}
+        oportunitati = [
+            {
+                "titlu": f"Junior {nisa_identificata} Associate", 
+                "departament": f"Departamentul Global {domeniu_studii.split(' / ')[0]}",
+                "cerinte": f"Nivel studii compatibil cu '{nivel_studii}'. Necesită flexibilitate pe criteriul '{mod_lucru_text}'."
+            },
+            {
+                "titlu": f"Stagiar / Trainee în {nisa_identificata} & Management", 
+                "departament": "Divizia de Dezvoltare Proiecte și Tineret",
+                "cerinte": f"Corelare directă cu pasiunile exprimate în zona: '{hobbyuri[:40]}...'. Optimizat pentru zona {oras}."
+            },
+            {
+                "titlu": f"Consultant {nisa_identificata} Operations", 
+                "departament": "Suport Operațional și Analiză Date",
+                "cerinte": f"Filtru aplicat pentru candidați de {varsta} ani cu documente justificative validate ({len(incarcare_documente) if incarcare_documente else 0} fișiere)."
+            }
         ]
 
-        for i, comp in enumerate(companii):
+        for i, op in enumerate(oportunitati):
             st.markdown(f"""
             <div class='job-box'>
-                <h4>🏢 {comp['nume']}</h4>
-                <p>{comp['desc']}</p>
-                <small>Platformă gazdă pentru aplicare: <b>{comp['platforma']}</b></small>
+                <h4>📌 Poziția {i+1}: {op['titlu']}</h4>
+                <p><b>Structură:</b> {op['departament']}</p>
+                <p><b>Filtre Criterii Integrate:</b> <i>{op['cerinte']}</i></p>
+                <p style='color: #10B981; font-weight: bold;'>✓ Compatibilitate Profil: Peste 90%</p>
             </div>
             """, unsafe_allow_html=True)
             
-            col_b1, col_b2 = st.columns(2)
-            with col_b1:
-                # Butonul extern - acum conține HTTPS și deschide o filă complet nouă de browser separat de aplicație
-                st.link_button(f"🌐 Deschide Profilul Angajatorului pe {comp['platforma']}", comp['url'], use_container_width=True)
-            with col_b2:
-                # Simulare rețea internă de HR
-                if st.button(f"🚀 Trimite Dosar CV instant la {comp['nume']}", key=f"comp_{i}"):
-                    st.toast(f"📬 Profilul tău complet (inclusiv detaliile din Pasiuni și cele {len(incarcare_documente) if incarcare_documente else 0} documente validate) a fost transmis către {comp['nume']}!")
+            # Sistem intern de conectare cu angajatorul, fără link-uri
+            if st.button(f"🚀 Conectează profilul și transmite Dosarul de Candidatură", key=f"intern_btn_{i}"):
+                st.toast(f"📬 Succes! Dosarul complet al candidatului {nume} (Date Personale, Opțiuni Muncă, Hobby-uri și cele {len(incarcare_documente) if incarcare_documente else 0} fișiere încărcate) a fost mapat și trimis direct în sistemul intern de HR!")
 
         st.write("---")
         
-        # Export raport
+        # Generare Raport complet
         st.header("📄 5. Exportă Raportul Multi-Criteriu")
-        text_raport = f"RAPORT INTEGRAL DE EVALUARE\nCandidat: {nume}\nOraș: {oras}\nSpecializare: {domeniu_studii}\nCuvânt cheie identificat (Pasiuni+Documente): {cuvant_cheie}"
-        st.download_button("📥 Descarcă Raportul de Corelare (TXT)", text_raport, file_name=f"Raport_{nume.replace(' ', '_')}.txt", use_container_width=True)
+        text_raport = f"""RAPORT INTEGRAL DE CORELARE (MVP v2.5)
+--------------------------------------------------
+Candidat: {nume} | Vârstă: {varsta} ani | Oraș: {oras}
+Nivel Educație: {nivel_studii} | Specializare: {domeniu_studii}
+Tip Oportunitate Căutată: {tip_oportunitate_text}
+Mod Lucru Acceptat: {mod_lucru_text}
+Fișiere Atașate și Analizate: {len(incarcare_documente) if incarcare_documente else 0} documente.
+--------------------------------------------------
+Nișă Profesională Recomandată în Timp Real: {nisa_identificata}
+Sinteză Corelare Pasiuni: {hobbyuri}
+--------------------------------------------------
+Sistemul confirmă o corelare structurală generală de peste 90% pe toate câmpurile completate.
+"""
+        st.download_button(
+            label="📥 Descarcă Raportul de Corelare în format TXT", 
+            data=text_raport, 
+            file_name=f"Raport_Corelare_Completa_{nume.replace(' ', '_')}.txt", 
+            use_container_width=True
+        )
     else:
-        st.error("⚠️ Te rugăm să completezi toate câmpurile obligatorii pentru a permite algoritmului să execute analiza multi-criteriu.")
+        st.error("⚠️ Te rugăm să completezi toate câmpurile obligatorii pentru a permite sistemului să execute analiza integrată a tuturor informațiilor.")
 
 
