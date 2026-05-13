@@ -44,7 +44,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<h1>🎓Aura AI- Află ce și cum ți se potrivește</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Aici te descoperi. De aici începe startul căutării! Cu modelul Aura AI îți poți introduce rapid domeniul de specializare, pasiunile și hobby-urile tale, iar modelul nostru îți va prezenta, în timp real, opțiunile cele mai potrivite pentru tine!/p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Aici te descoperi. De aici începe startul căutării! Cu modelul Aura AI îți poți introduce rapid domeniul de specializare, pasiunile și hobby-urile tale, iar modelul nostru îți va prezenta, în timp real, opțiunile cele mai potrivite pentru tine!"/p> , unsafe_allow_html=True)
 st.write("---")
 
 # Sectiunea 1: Datele Personale si de Studii
