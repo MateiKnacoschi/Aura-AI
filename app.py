@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Setări pagină
+# Setari pagina
 st.set_page_config(page_title="Asistent AI Cariere Universal", page_icon="🚀", layout="centered")
 
 # Design vizual modern
@@ -19,7 +19,7 @@ st.markdown("<h1>🎓 Platforma AI Universală de Orientare</h1>", unsafe_allow_
 st.markdown("<p class='subtitle'>Prototip avansat de potrivire profesională pentru studenți și absolvenți</p>", unsafe_allow_html=True)
 st.write("---")
 
-# Secțiunea 1: Datele Personale și de Studii
+# Sectiunea 1: Datele Personale si de Studii
 st.header("📋 1. Date Personale și Educație")
 
 col1, col2 = st.columns(2)
@@ -35,7 +35,7 @@ with col2:
 
 st.write("---")
 
-# Secțiunea 2: Preferințe de Muncă
+# Sectiunea 2: Preferinte de Munca
 st.header("⚙️ 2. Preferințe și Obiective Profesionale")
 
 col3, col4 = st.columns(2)
@@ -54,10 +54,9 @@ with col4:
 
 st.write("---")
 
-# Secțiunea 3: Documente și Experiență Open text
+# Sectiunea 3: Documente si Experienta Open text
 st.header("📂 3. Documente și Pasiuni")
 
-# Încarcă documente multiple
 incarcare_documente = st.file_uploader(
     "Încarcă documentele tale (CV, Atestat studii, Diplome, Certificate):", 
     type=["pdf", "docx", "png", "jpg"], 
@@ -78,12 +77,15 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
         st.info("🧠 Inteligența Artificială corelează studiile, locația, documentele și pasiunile tale...")
         st.success("🎉 Analiză structurală finalizată!")
         
-        # Algoritm dinamic simplu pentru mockup pe baza textului introdus
-        text_analizat = hobbyuri.lower()
+        # Algoritm dinamic curat pentru extragerea cuvintelor cheie
         cuvinte = [c for c in hobbyuri.split() if len(c) > 4]
-       cuvant_cheie = cuvinte[0].capitalize() if cuvinte else "Specialist"
         
-        # Generăm date adaptate dinamic bazate pe input-ul utilizatorului
+        if cuvinte:
+            cuvant_cheie = cuvinte[0].capitalize()
+        else:
+            cuvant_cheie = "Specialist"
+        
+        # Generam date adaptate dinamic bazate pe input-ul utilizatorului
         date_ai = {
             "domeniu_principal": f"Expert / Junior în {cuvant_cheie}",
             "descriere_job": f"Având în vedere nivelul tău de studii ({nivel_studii}) și locația din {oras}, profilul tău bazat pe pasiunea '{hobbyuri}' indică un potențial ridicat.",
@@ -93,7 +95,7 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
             "nume_domeniu_1": f"Direcția {cuvant_cheie}", "nume_domeniu_2": "Management & Coordonare", "nume_domeniu_3": "Consultant Tehnic"
         }
 
-        # Graficul vizual bazat pe preferințele reale ale studentului
+        # Graficul vizual
         st.markdown(f"### 📊 Compatibilitatea pe Domenii de Activitate")
         date_grafic = pd.DataFrame({
             'Domeniu profesional personalizat': [date_ai["nume_domeniu_1"], date_ai["nume_domeniu_2"], date_ai["nume_domeniu_3"]],
@@ -103,7 +105,7 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
         st.bar_chart(date_grafic)
         st.write("---")
 
-        # Afișarea rezultatelor corelate
+        # Afisarea rezultatelor corelate
         col_st, col_dr = st.columns(2)
         with col_st:
             st.markdown("#### 💼 Poziția Potrivită Identificată")
@@ -117,21 +119,10 @@ if st.button("Generează Analiza Profilului Complet", type="primary"):
             
         st.write("---")
         
-        # Generare Raport complex cu noile câmpuri introduse
+        # Generare Raport complex
         st.header("📄 5. Exportă Datele Proiectului")
-        text_raport = f"""RAPORT AI EVALUARE CARIERĂ STUDENT
-----------------------------------------
-Candidat: {nume} | Vârstă: {varsta} ani
-Origine: {oras} | Nivel Studii: {nivel_studii}
-Tip Oportunitate Căutată: {date_ai['tip_oportunitate']}
-Regim Lucru Preferat: {date_ai['locatie_recomandata']}
-----------------------------------------
-Profil AI Recomandat: {date_ai['domeniu_principal']}
-Evaluare Context: {date_ai['descriere_job']}
-Documente atașate procesate: {len(incarcare_documente) if incarcare_documente else 0} fișiere.
-----------------------------------------
-Generat cu succes în versiunea MVP v1.5
-"""
+        text_raport = f"RAPORT AI EVALUARE CARIERĂ STUDENT\n----------------------------------------\nCandidat: {nume}\nOrigine: {oras}\nNivel Studii: {nivel_studii}\nTip Oportunitate: {date_ai['tip_oportunitate']}\nRegim Lucru: {date_ai['locatie_recomandata']}\n----------------------------------------\nProfil AI Recomandat: {date_ai['domeniu_principal']}\nEvaluare Context: {date_ai['descriere_job']}\n"
+        
         st.download_button(
             label="📥 Descarcă Raportul Complet în format TXT", 
             data=text_raport, 
