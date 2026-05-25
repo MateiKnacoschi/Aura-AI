@@ -4,7 +4,7 @@ import requests
 import json
 
 # Setari pagina
-st.set_page_config(page_title="Aura AI- De aici începe noua ta carieră", page_icon="🚀", layout="centered")
+st.set_page_config(page_title="Smart Career- Asistentul tău pentru un job de vis", page_icon="🚀", layout="centered")
 
 # Design vizual modern - Casete negre cu text alb
 st.markdown("""
